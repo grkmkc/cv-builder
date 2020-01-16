@@ -10,7 +10,6 @@
   "dependencies": {
     "axios": "^0.19.1",
     "core-js": "^3.4.4",
-    "http-proxy-middleware": "^0.20.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -31,7 +30,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
