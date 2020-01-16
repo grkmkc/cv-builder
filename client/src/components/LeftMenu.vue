@@ -1,16 +1,10 @@
 <template>
-  <div class="main">
-    <h1>Main</h1>
-    <ul>
-      <li v-for="(user, index) in users" v-bind:index="index" :key="user.id">
-        {{ index }} - {{ user.name }}
-      </li>
-    </ul>
+  <div class="left-menu">
+    <h1>left</h1>
   </div>
 </template>
 
 <script>
-import userApiService from '../services/userApiService';
 export default {
   name: 'Main',
   props: {
@@ -27,10 +21,7 @@ export default {
 
   beforeCreate() {},
   created() {},
-  async mounted() {
-    let user = await userApiService.getAll();
-    this.users = user;
-  },
+  async mounted() {},
   methods: {},
   computed: {
     // stream() {
