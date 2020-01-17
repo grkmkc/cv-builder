@@ -1,12 +1,15 @@
 <template>
   <div class="left-menu">
-    <h1>left</h1>
+    <ul>
+      <li v-for="(category,index) in categories" :key="index">{{index + 1}} - {{ category.name}}</li>
+    </ul>
   </div>
 </template>
 
 <script>
+import categoryApiService from "../services/categoryApiService";
 export default {
-  name: 'Main',
+  name: "Main",
   props: {
     msg: String
   },
@@ -14,20 +17,19 @@ export default {
   data() {
     // create data.
     return {
-      users: []
+      categories: []
     };
   },
   components: {},
 
   beforeCreate() {},
   created() {},
-  async mounted() {},
-  methods: {},
-  computed: {
-    // stream() {
-    //     return this.$store.getters.getstreamerdata
-    // },
+  async mounted() {
+    let categories = await categoryApiService.getAllCategories();
+    this.categories = categories;
   },
+  methods: {},
+  computed: {},
   watch: {}
 };
 </script>

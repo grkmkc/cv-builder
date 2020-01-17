@@ -2,17 +2,19 @@
   <div class="main">
     <h1>Main</h1>
     <ul>
-      <li v-for="(user, index) in users" v-bind:index="index" :key="user.id">
-        {{ index }} - {{ user.name }}
-      </li>
+      <li
+        v-for="(user, index) in users"
+        v-bind:index="index"
+        :key="user.id"
+      >{{ index + 1 }} - {{ user.name }}</li>
     </ul>
   </div>
 </template>
 
 <script>
-import userApiService from '../services/userApiService';
+import userApiService from "../services/userApiService";
 export default {
-  name: 'Main',
+  name: "Main",
   props: {
     msg: String
   },
