@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
+const passport = require('passport');
 
 // IMPORT MODELS
 require('./models/User');
 require('./models/Categories');
+require('./config/passport');
 
 const app = express();
 
@@ -20,6 +22,8 @@ mongoose.connect(
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
 
 //IMPORT ROUTES
 require('./routes/loginRoutes')(app);
