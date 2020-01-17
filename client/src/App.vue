@@ -1,30 +1,49 @@
 <template>
   <div id="app">
-    <Main />
-    <left-menu />
+    <Header></Header>
+    <div class="main-wrapper">
+      <left-menu />
+      <Main />
+    </div>
   </div>
 </template>
 
 <script>
-import Main from './components/Main.vue';
-import LeftMenu from './components/LeftMenu.vue';
+import Main from "./components/Main.vue";
+import LeftMenu from "./components/LeftMenu.vue";
+import Header from "./components/Header";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Main,
-    LeftMenu
+    LeftMenu,
+    Header
   }
 };
 </script>
 
 <style>
+@import "./style/reset.css";
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+}
+.main-wrapper {
+  display: flex;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+.left-menu {
+  width: 25%;
+  padding: 1em;
+}
+.main {
+  width: 75%;
+  padding: 1em;
 }
 </style>
