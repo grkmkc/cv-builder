@@ -40,7 +40,7 @@ export default {
 }
 .left-menu {
   width: 25%;
-  padding: 1em;
+  background: rgb(54, 60, 69);
 }
 .main {
   width: 75%;

@@ -165,3 +165,12 @@ blockquote {
 li {
   list-style-type: none;
 }
+a {
+  color: #424243;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}

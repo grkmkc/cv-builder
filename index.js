@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
 
 // IMPORT MODELS
 require('./models/User');
@@ -14,15 +17,18 @@ mongoose.connect(
   { useUnifiedTopology: true, useNewUrlParser: true }
 );
 
+app.use(helmet());
+app.use(cors());
 app.use(bodyParser.json());
 
 //IMPORT ROUTES
+require('./routes/loginRoutes')(app);
 require('./routes/userRoutes')(app);
 require('./routes/categoryRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
-
+  app.use(compression());
   const path = require('path');
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
