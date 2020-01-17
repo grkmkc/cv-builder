@@ -10,8 +10,8 @@
             <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
           </div>
           <span>or use your account</span>
-          <input type="name" placeholder="Name" />
-          <input type="password" placeholder="Password" />
+          <input type="email" name="email" placeholder="email" />
+          <input type="password" name="password" placeholder="Password" />
           <a href="#">Forgot your password?</a>
           <button type="submit">Sign In</button>
         </form>

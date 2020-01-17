@@ -1,40 +1,61 @@
+const mongoose = require('mongoose');
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
-const User = mongoose.model('Users');
-
-passport.use(
-  new LocalStrategy(function(username, password, done) {
-    User.findOne(
-      {
-        username: username
-      },
-      function(err, user) {
-        if (err) {
-          return done(err);
-        }
-
-        if (!user) {
-          return done(null, false);
-        }
-
-        if (user.password != password) {
-          return done(null, false);
-        }
-        return done(null, user);
-      }
-    );
-  })
-);
+const auth = require('./auth');
+const Users = mongoose.model('Users');
 
 module.exports = app => {
-  app.post(`/login`, async (req, res) => {
-    console.log(req);
-    passport.authenticate('local', { failureRedirect: '/error' }),
-      function(req, res) {
-        return res.status(201).send({
-          error: false
-        });
-      };
+  app.post('/login', auth.optional, (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if (!email) {
+      return res.status(422).json({
+        errors: {
+          email: 'is required'
+        }
+      });
+    }
+
+    if (!password) {
+      return res.status(422).json({
+        errors: {
+          password: 'is required'
+        }
+      });
+    }
+
+    return passport.authenticate(
+      'local',
+      { session: false },
+      (err, passportUser, info) => {
+        if (err) {
+          return next(err);
+        }
+
+        if (passportUser) {
+          const user = passportUser;
+          user.token = passportUser.generateJWT();
+
+          return res.json({ user: user.toAuthJSON() });
+        }
+
+        return res.status(200);
+      }
+    )(req, res, next);
   });
+
+  /* //GET current route (required, only authenticated users have access)
+  app.get('/current', auth.required, (req, res, next) => {
+    const { payload: { id } } = req;
+  
+    return Users.findById(id)
+      .then((user) => {
+        if(!user) {
+          return res.sendStatus(400);
+        }
+  
+        return res.json({ user: user.toAuthJSON() });
+      });
+  }); */
 };

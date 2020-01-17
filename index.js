@@ -21,6 +21,7 @@ mongoose.connect(
 
 app.use(helmet());
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
