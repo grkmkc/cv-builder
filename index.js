@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 // IMPORT MODELS
 require('./models/User');
+require('./models/Categories');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 
 //IMPORT ROUTES
 require('./routes/userRoutes')(app);
+require('./routes/categoryRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
