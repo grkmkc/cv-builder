@@ -1,49 +1,48 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
 
 const UsersSchema = new Schema({
-  email: String,
-  hash: String,
-  salt: String
+  email: {
+    type: String,
+    required: true,
+    index: { unique: true }
+  },
+  password: {
+    type: String,
+    required: true
+  }
 });
 
-UsersSchema.methods.setPassword = function(password) {
-  this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto
-    .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
-    .toString('hex');
+UsersSchema.pre('create', function(next) {
+  var user = this;
+  if (this.isModified('password') || this.isNew) {
+    bcrypt.genSalt(10, function(err, salt) {
+      if (err) {
+        return next(err);
+      }
+      bcrypt.hash(user.password, salt, null, function(err, hash) {
+        if (err) {
+          return next(err);
+        }
+        user.password = hash;
+        console.log(user.password, 'user.passwrod');
+        next();
+      });
+    });
+  } else {
+    return next();
+  }
+});
+
+UsersSchema.methods.comparePassword = function(passw, cb) {
+  bcrypt.compare(passw, this.password, function(err, isMatch) {
+    console.log(passw, this.password, 'asd');
+    if (err) {
+      return cb(err);
+    }
+    cb(null, isMatch);
+  });
 };
 
-UsersSchema.methods.validatePassword = function(password) {
-  const hash = crypto
-    .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
-    .toString('hex');
-  return this.hash === hash;
-};
-
-UsersSchema.methods.generateJWT = function() {
-  const today = new Date();
-  const expirationDate = new Date(today);
-  expirationDate.setDate(today.getDate() + 60);
-
-  return jwt.sign(
-    {
-      email: this.email,
-      id: this._id,
-      exp: parseInt(expirationDate.getTime() / 1000, 10)
-    },
-    'secret'
-  );
-};
-
-UsersSchema.methods.toAuthJSON = function() {
-  return {
-    _id: this._id,
-    email: this.email,
-    token: this.generateJWT()
-  };
-};
-
-mongoose.model('Users', UsersSchema);
+mongoose.model('user', UsersSchema);

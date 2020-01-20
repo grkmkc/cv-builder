@@ -4,32 +4,29 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-const passport = require('passport');
+const auth = require('./routes/auth');
 
 // IMPORT MODELS
 require('./models/User');
 require('./models/Categories');
-require('./config/passport');
 
 const app = express();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
   process.env.MONGODB_URI || `mongodb://localhost:27017/node-react-starter`,
-  { useUnifiedTopology: true, useNewUrlParser: true }
+  { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
 );
 
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
 
 //IMPORT ROUTES
-require('./routes/loginRoutes')(app);
-require('./routes/userRoutes')(app);
+/* require('./routes/userRoutes')(app); */
 require('./routes/categoryRoutes')(app);
+require('./routes/auth')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
