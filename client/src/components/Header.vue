@@ -14,15 +14,8 @@
       </div>
 
       <div class="nav-links">
-        <a href="//github.io/jo_geek" target="_blank">Github</a>
-        <a href="http://stackoverflow.com/users/4084003/" target="_blank"
-          >Stackoverflow</a
-        >
-        <a href="https://in.linkedin.com/in/jonesvinothjoseph" target="_blank"
-          >LinkedIn</a
-        >
-        <a href="https://codepen.io/jo_Geek/" target="_blank">Codepen</a>
-        <router-link to="/login">Log In</router-link>
+        <router-link to="/signin">Sign In</router-link>
+        <router-link to="/signup">Sign Up</router-link>
       </div>
     </div>
   </div>

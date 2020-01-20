@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import userApiService from "../services/userApiService";
+/* import userApiService from "../services/userApiService"; */
 export default {
   name: "Main",
   props: {
@@ -29,10 +29,10 @@ export default {
 
   beforeCreate() {},
   created() {},
-  async mounted() {
+  /* async mounted() {
     let user = await userApiService.getAll();
     this.users = user;
-  },
+  }, */
   methods: {},
   computed: {
     // stream() {

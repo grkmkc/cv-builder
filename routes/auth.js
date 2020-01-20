@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = mongoose.model('user');
 
 module.exports = app => {
-  app.post('/register', async (req, res, next) => {
+  app.post('/api/register', async (req, res, next) => {
     let user = new User({
       email: req.body.email,
       password: req.body.password
@@ -18,7 +18,7 @@ module.exports = app => {
     });
   });
 
-  app.post('/login', function(req, res) {
+  app.post('/api/login', function(req, res) {
     User.findOne(
       {
         email: req.body.email

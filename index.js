@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-const auth = require('./routes/auth');
+const history = require('connect-history-api-fallback');
 
 // IMPORT MODELS
 require('./models/User');
@@ -36,6 +36,15 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+const staticFileMiddleware = express.static(__dirname);
+app.use(staticFileMiddleware);
+app.use(
+  history({
+    disableDotRule: true,
+    verbose: true
+  })
+);
+app.use(staticFileMiddleware);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
