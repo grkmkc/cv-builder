@@ -6,18 +6,16 @@ const jwt = require('jsonwebtoken');
 const User = mongoose.model('user');
 
 module.exports = app => {
-  app.post('/register', async (req, res) => {
-    if (!req.body.email || !req.body.password) {
-      res.json({ success: false, msg: 'Please pass email and password.' });
-    } else {
-      console.log('naaaa');
-      let newUser = await User.create(req.body);
-      console.log(newUser, 'new');
-      return res.status(201).send({
-        error: false,
-        newUser
-      });
-    }
+  app.post('/register', async (req, res, next) => {
+    let user = new User({
+      email: req.body.email,
+      password: req.body.password
+    });
+    let result = await user.save();
+    return res.status(201).send({
+      error: false,
+      result
+    });
   });
 
   app.post('/login', function(req, res) {
@@ -25,10 +23,8 @@ module.exports = app => {
       {
         email: req.body.email
       },
-      console.log(req.body.email, 'body'),
 
       function(err, user) {
-        console.log(user, 'body user');
         if (err) throw err;
 
         if (!user) {
@@ -38,15 +34,15 @@ module.exports = app => {
           });
         } else {
           // check if password matches
+          console.log(user, 'user');
           user.comparePassword(req.body.password, function(err, isMatch) {
             if (isMatch && !err) {
+              console.log('22');
               // if user is found and password is right create a token
               var token = jwt.sign(user.toJSON(), settings.secret);
               // return the information including token as JSON
-
               res.json({ success: true, token: 'JWT ' + token });
             } else {
-              console.log('else fa');
               res.status(401).send({
                 success: false,
                 msg: 'Authentication failed. Wrong password.'

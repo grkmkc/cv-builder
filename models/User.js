@@ -14,25 +14,13 @@ const UsersSchema = new Schema({
   }
 });
 
-UsersSchema.pre('create', function(next) {
-  var user = this;
-  if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, function(err, salt) {
-      if (err) {
-        return next(err);
-      }
-      bcrypt.hash(user.password, salt, null, function(err, hash) {
-        if (err) {
-          return next(err);
-        }
-        user.password = hash;
-        console.log(user.password, 'user.passwrod');
-        next();
-      });
-    });
-  } else {
+UsersSchema.pre('save', function(next) {
+  if (!this.isModified('password')) {
     return next();
   }
+  console.log(this.password, 'asd');
+  this.password = bcrypt.hashSync(this.password, 10);
+  next();
 });
 
 UsersSchema.methods.comparePassword = function(passw, cb) {
