@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import Header from './components/Header';
+import Header from "./components/Header";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Header
   }
@@ -17,9 +17,9 @@ export default {
 </script>
 
 <style>
-@import './style/reset.css';
+@import "./style/reset.css";
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

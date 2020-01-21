@@ -2,7 +2,7 @@
   <div class="register">
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form action="/register" method="POST">
+        <form action="#!" method="POST">
           <h1>Sign up</h1>
           <div class="social-container">
             <a href="#" class="social">
@@ -17,12 +17,12 @@
           </div>
           <span>or use your account</span>
           <div class="sign-up-wrapper">
-            <input type="name" name="name" placeholder="name" />
-            <input type="lastname" name="lastname" placeholder="lastname" />
+            <input type="name" name="name" v-model="name" placeholder="name" />
+            <input type="lastname" name="lastname" v-model="lastname" placeholder="lastname" />
           </div>
-          <input type="email" name="email" placeholder="email" />
-          <input type="password" name="password" placeholder="Password" />
-          <button type="submit">Sign Up</button>
+          <input type="email" name="email" v-model="email" placeholder="email" />
+          <input type="password" name="password" v-model="password" placeholder="Password" />
+          <button type="button" @click="handleRegister();">Sign Up</button>
         </form>
       </div>
     </div>
@@ -30,22 +30,40 @@
 </template>
 
 <script>
+import registerApiService from "../services/registerApiService";
 export default {
-  name: 'Register'
-  /* props: {},
+  name: "Register",
+  props: {},
   static: {},
   data() {
     // create data.
-    return {};
+    return {
+      name: "",
+      lastname: "",
+      email: "",
+      password: ""
+    };
   },
   components: {},
 
   beforeCreate() {},
   created() {},
   async mounted() {},
-  methods: {},
+  methods: {
+    handleRegister: async function() {
+      console.log("clicked");
+      let formData = {
+        name: this.name,
+        lastname: this.lastname,
+        email: this.email,
+        password: this.password
+      };
+      console.log(formData, "go");
+      await registerApiService.postAll(formData);
+    }
+  },
   computed: {},
-  watch: {} */
+  watch: {}
 };
 </script>
 
@@ -152,11 +170,10 @@ input {
   width: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   justify-content: space-between;
 }
 .sign-up-wrapper > input {
-  width: auto !important;
+  width: 40% !important;
 }
 
 .social-container {

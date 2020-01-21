@@ -7,9 +7,12 @@ const User = mongoose.model('user');
 
 module.exports = app => {
   app.post('/api/register', async (req, res, next) => {
+    console.log(req);
     let user = new User({
-      email: req.body.email,
-      password: req.body.password
+      name: req.body.data.name,
+      lastname: req.body.data.lastname,
+      email: req.body.data.email,
+      password: req.body.data.password
     });
     let result = await user.save();
     return res.status(201).send({

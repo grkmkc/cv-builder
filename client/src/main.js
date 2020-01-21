@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import routes from './routes';
 Vue.config.productionTip = false;
 const router = new VueRouter({
-  mode: 'history',
+  /* mode: 'history', */ /* Open for production (build ) mode */
   routes: routes
 });
 Vue.use(VueRouter);

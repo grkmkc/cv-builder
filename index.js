@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const history = require('connect-history-api-fallback');
+const morgan = require('morgan');
 
 // IMPORT MODELS
 require('./models/User');
@@ -20,6 +21,8 @@ mongoose.connect(
 
 app.use(helmet());
 app.use(cors());
+app.use(morgan('combined'));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -36,7 +39,9 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-const staticFileMiddleware = express.static(__dirname);
+
+// Open it for production purpose
+/* const staticFileMiddleware = express.static('client/public');
 app.use(staticFileMiddleware);
 app.use(
   history({
@@ -44,8 +49,7 @@ app.use(
     verbose: true
   })
 );
-app.use(staticFileMiddleware);
-
+app.use(staticFileMiddleware); */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`app running on port ${PORT}`);
