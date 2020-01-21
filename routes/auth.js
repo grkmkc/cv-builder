@@ -13,11 +13,22 @@ module.exports = app => {
       email: req.body.data.email,
       password: req.body.data.password
     });
-    let result = await user.save();
+    User.findOne({ email: req.body.data.email }, function(err, user) {
+      if (err) {
+        console.log(err);
+      }
+      console.log(user);
+      var message;
+      if (user) {
+        message = 'user exists, please try to sign in';
+      }
+      res.json({ message: message });
+    });
+    /*  let result = await user.save();
     return res.status(201).send({
       error: false,
       result
-    });
+    }); */
   });
 
   app.post('/api/login', function(req, res) {

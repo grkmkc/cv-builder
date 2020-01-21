@@ -1,7 +1,7 @@
 .alert {
   padding: 20px;
-  background-color: hsl(107, 56%, 27%);
-  color: white;
+  background-color: #d4edda;
+  color: #155724;
   width: 90%;
   margin-bottom: 1em;
 }

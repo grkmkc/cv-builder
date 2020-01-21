@@ -15,7 +15,7 @@
               <i class="fab fa-linkedin-in"></i>
             </a>
           </div>
-          <span>or use your account</span>
+          <span>or use form </span>
           <div class="sign-up-wrapper">
             <input type="name" name="name" v-model="name" placeholder="name" />
             <input
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import registerApiService from '../services/registerApiService';
+import axios from 'axios';
 export default {
   name: 'Register',
   props: {},
@@ -89,7 +89,7 @@ export default {
         this.errors.push('Password required.');
       }
 
-      let formData = {
+      let data = {
         name: this.name,
         lastname: this.lastname,
         email: this.email,
@@ -97,11 +97,22 @@ export default {
       };
       console.log(this.errors)
       if (this.errors.length < 1) {
-          await registerApiService.postAll(formData);
-          const msg = 'Account created!'
+         let msg = ''
+          await axios
+                    .post(`/api/register`, {
+                      data
+                    })
+                    .then(function(response) {
+                      console.log(response);
+                      msg = response.data.message;
+                    })
+                    .catch(function(error) {
+                      console.log(error);
+                    });
+         
           const alert = ` <div class="alert">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>${msg}</strong>
+           <strong> ${msg} </strong>
           </div>`;
           document.getElementById('register-form').insertAdjacentHTML('afterbegin', alert)
          this.name = '';
