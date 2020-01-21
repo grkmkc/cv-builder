@@ -2,7 +2,7 @@
   <div class="register">
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form action="#!" method="POST">
+        <form action="#!" method="POST" id="register-form">
           <h1>Sign up</h1>
           <div class="social-container">
             <a href="#" class="social">
@@ -18,11 +18,32 @@
           <span>or use your account</span>
           <div class="sign-up-wrapper">
             <input type="name" name="name" v-model="name" placeholder="name" />
-            <input type="lastname" name="lastname" v-model="lastname" placeholder="lastname" />
+            <input
+              type="lastname"
+              name="lastname"
+              v-model="lastname"
+              placeholder="lastname"
+            />
           </div>
-          <input type="email" name="email" v-model="email" placeholder="email" />
-          <input type="password" name="password" v-model="password" placeholder="Password" />
-          <button type="button" @click="handleRegister();">Sign Up</button>
+          <input
+            type="email"
+            name="email"
+            v-model="email"
+            placeholder="email"
+          />
+          <input
+            type="password"
+            name="password"
+            v-model="password"
+            placeholder="Password"
+          />
+           <p v-if="errors.length">
+            <b>Please correct the following error(s):</b>
+            <ul>
+              <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+            </ul>
+           </p>
+          <button type="button" @click="handleRegister()">Sign Up</button>
         </form>
       </div>
     </div>
@@ -30,18 +51,19 @@
 </template>
 
 <script>
-import registerApiService from "../services/registerApiService";
+import registerApiService from '../services/registerApiService';
 export default {
-  name: "Register",
+  name: 'Register',
   props: {},
   static: {},
   data() {
     // create data.
     return {
-      name: "",
-      lastname: "",
-      email: "",
-      password: ""
+      errors: [],
+      name: '',
+      lastname: '',
+      email: '',
+      password: ''
     };
   },
   components: {},
@@ -51,15 +73,43 @@ export default {
   async mounted() {},
   methods: {
     handleRegister: async function() {
-      console.log("clicked");
+    
+    this.errors = [];
+
+      if (!this.name) {
+        this.errors.push('Name required.');
+      }
+      if (!this.lastname) {
+        this.errors.push('Lastname required.');
+      }
+       if (!this.email) {
+        this.errors.push('Email required.');
+      }
+      if (!this.password) {
+        this.errors.push('Password required.');
+      }
+
       let formData = {
         name: this.name,
         lastname: this.lastname,
         email: this.email,
         password: this.password
       };
-      console.log(formData, "go");
-      await registerApiService.postAll(formData);
+      console.log(this.errors)
+      if (this.errors.length < 1) {
+          await registerApiService.postAll(formData);
+          const msg = 'Account created!'
+          const alert = ` <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>${msg}</strong>
+          </div>`;
+          document.getElementById('register-form').insertAdjacentHTML('afterbegin', alert)
+         this.name = '';
+         this.lastname = '';
+         this.email = '';
+         this.password = '';
+      }
+      
     }
   },
   computed: {},

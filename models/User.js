@@ -12,9 +12,17 @@ const UsersSchema = new Schema({
     type: String,
     required: true
   },
-  name: String,
-  lastname: String,
-  birthday: Date
+  name: {
+    type: String,
+    required: true
+  },
+  lastname: {
+    type: String,
+    required: true
+  },
+  birthday: {
+    type: Date
+  }
 });
 
 UsersSchema.pre('save', function(next) {
@@ -28,7 +36,6 @@ UsersSchema.pre('save', function(next) {
 
 UsersSchema.methods.comparePassword = function(passw, cb) {
   bcrypt.compare(passw, this.password, function(err, isMatch) {
-    console.log(passw, this.password, 'asd');
     if (err) {
       return cb(err);
     }

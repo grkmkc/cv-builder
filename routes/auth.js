@@ -7,7 +7,6 @@ const User = mongoose.model('user');
 
 module.exports = app => {
   app.post('/api/register', async (req, res, next) => {
-    console.log(req);
     let user = new User({
       name: req.body.data.name,
       lastname: req.body.data.lastname,
