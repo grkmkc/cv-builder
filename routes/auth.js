@@ -17,18 +17,17 @@ module.exports = app => {
       if (err) {
         console.log(err);
       }
-      console.log(user);
       var message;
       if (user) {
-        message = 'user exists, please try to sign in';
+        message = 'email exists, please try to sign in';
       }
       res.json({ message: message });
     });
-    /*  let result = await user.save();
+    let result = await user.save();
     return res.status(201).send({
       error: false,
       result
-    }); */
+    });
   });
 
   app.post('/api/login', function(req, res) {
@@ -52,9 +51,11 @@ module.exports = app => {
             if (isMatch && !err) {
               console.log('22');
               // if user is found and password is right create a token
-              var token = jwt.sign(user.toJSON(), settings.secret);
+              var token = jwt.sign(user.toJSON(), settings.secret, {
+                expiresIn: 86400
+              });
               // return the information including token as JSON
-              res.json({ success: true, token: 'JWT ' + token });
+              res.json({ success: true, token: 'JWT ' + token, user: user });
             } else {
               res.status(401).send({
                 success: false,

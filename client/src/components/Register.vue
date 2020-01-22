@@ -15,34 +15,19 @@
               <i class="fab fa-linkedin-in"></i>
             </a>
           </div>
-          <span>or use form </span>
+          <span>or use form</span>
           <div class="sign-up-wrapper">
             <input type="name" name="name" v-model="name" placeholder="name" />
-            <input
-              type="lastname"
-              name="lastname"
-              v-model="lastname"
-              placeholder="lastname"
-            />
+            <input type="lastname" name="lastname" v-model="lastname" placeholder="lastname" />
           </div>
-          <input
-            type="email"
-            name="email"
-            v-model="email"
-            placeholder="email"
-          />
-          <input
-            type="password"
-            name="password"
-            v-model="password"
-            placeholder="Password"
-          />
-           <p v-if="errors.length">
+          <input type="email" name="email" v-model="email" placeholder="email" />
+          <input type="password" name="password" v-model="password" placeholder="Password" />
+          <div v-if="errors.length">
             <b>Please correct the following error(s):</b>
             <ul>
               <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
             </ul>
-           </p>
+          </div>
           <button type="button" @click="handleRegister()">Sign Up</button>
         </form>
       </div>
@@ -51,19 +36,19 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-  name: 'Register',
+  name: "Register",
   props: {},
   static: {},
   data() {
     // create data.
     return {
       errors: [],
-      name: '',
-      lastname: '',
-      email: '',
-      password: ''
+      name: "",
+      lastname: "",
+      email: "",
+      password: ""
     };
   },
   components: {},
@@ -73,20 +58,19 @@ export default {
   async mounted() {},
   methods: {
     handleRegister: async function() {
-    
-    this.errors = [];
+      this.errors = [];
 
       if (!this.name) {
-        this.errors.push('Name required.');
+        this.errors.push("Name required.");
       }
       if (!this.lastname) {
-        this.errors.push('Lastname required.');
+        this.errors.push("Lastname required.");
       }
-       if (!this.email) {
-        this.errors.push('Email required.');
+      if (!this.email) {
+        this.errors.push("Email required.");
       }
       if (!this.password) {
-        this.errors.push('Password required.');
+        this.errors.push("Password required.");
       }
 
       let data = {
@@ -95,32 +79,33 @@ export default {
         email: this.email,
         password: this.password
       };
-      console.log(this.errors)
+      console.log(this.errors);
       if (this.errors.length < 1) {
-         let msg = ''
-          await axios
-                    .post(`/api/register`, {
-                      data
-                    })
-                    .then(function(response) {
-                      console.log(response);
-                      msg = response.data.message;
-                    })
-                    .catch(function(error) {
-                      console.log(error);
-                    });
-         
-          const alert = ` <div class="alert">
+        let msg = "";
+        await axios
+          .post(`/api/register`, {
+            data
+          })
+          .then(function(response) {
+            console.log(response);
+            msg = response.data.message;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+        console.log(msg, "msg");
+        const alert = ` <div class="alert alert-danger">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
            <strong> ${msg} </strong>
           </div>`;
-          document.getElementById('register-form').insertAdjacentHTML('afterbegin', alert)
-         this.name = '';
-         this.lastname = '';
-         this.email = '';
-         this.password = '';
+        document
+          .getElementById("register-form")
+          .insertAdjacentHTML("afterbegin", alert);
+        this.name = "";
+        this.lastname = "";
+        this.email = "";
+        this.password = "";
       }
-      
     }
   },
   computed: {},

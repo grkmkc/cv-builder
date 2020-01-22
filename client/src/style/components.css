@@ -1,9 +1,10 @@
 .alert {
   padding: 20px;
-  background-color: #d4edda;
-  color: #155724;
   width: 90%;
   margin-bottom: 1em;
+  color: white;
+  opacity: 0.83;
+  transition: opacity 0.6s;
 }
 .alert > .closebtn {
   margin-left: 15px;
@@ -18,4 +19,16 @@
 
 .alert > .closebtn:hover {
   color: black;
+}
+.alert-danger {
+  background-color: #f44336;
+}
+.alert-success {
+  background-color: #4caf50;
+}
+.alert-info {
+  background-color: #2196f3;
+}
+.alert-warning {
+  background-color: #ff9800;
 }

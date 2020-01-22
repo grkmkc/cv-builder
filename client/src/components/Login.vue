@@ -16,10 +16,20 @@
             </a>
           </div>
           <span>or use your account</span>
-          <input type="email" name="email" placeholder="email" />
-          <input type="password" name="password" placeholder="Password" />
+          <input
+            type="email"
+            name="email"
+            v-model="email"
+            placeholder="email"
+          />
+          <input
+            type="password"
+            name="password"
+            v-model="password"
+            placeholder="Password"
+          />
           <a href="#">Forgot your password?</a>
-          <button type="submit">Sign In</button>
+          <button type="button" @click="handleLogin()">Sign In</button>
         </form>
       </div>
     </div>
@@ -27,14 +37,18 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: "Login",
+  name: 'Login',
   props: {},
   static: {},
   data() {
     // create data.
     return {
-      isAuthenticated: false
+      isAuthenticated: false,
+      errors: [],
+      email: '',
+      password: ''
     };
   },
   components: {},
@@ -42,7 +56,27 @@ export default {
   beforeCreate() {},
   created() {},
   async mounted() {},
-  methods: {},
+  methods: {
+    handleLogin: function() {
+      this.errors = [];
+      if (!this.email) {
+        this.errors.push('Email required.');
+      }
+      if (!this.password) {
+        this.errors.push('Password required.');
+      }
+
+      let email = this.email;
+      let password = this.password;
+      if (this.errors.length < 1) {
+        /* this.$store.dispatch('fetchStreamData', { email, password }); */
+        this.$store
+          .dispatch('login', { email, password })
+          .then(() => this.$router.push('/'))
+          .catch(err => console.log(err));
+      }
+    }
+  },
   computed: {},
   watch: {}
 };
