@@ -13,7 +13,11 @@
         </label>
       </div>
 
-      <div class="nav-links">
+      <div v-if="isLoggedIn" class="nav-links">
+        <router-link to="/user">{{ userInfo.name }}</router-link>
+        <router-link to="/signup">Sign Out</router-link>
+      </div>
+      <div v-else class="nav-links">
         <router-link to="/signin">Sign In</router-link>
         <router-link to="/signup">Sign Up</router-link>
       </div>
@@ -22,22 +26,25 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
-  name: 'Header'
-  /* props: {},
+  name: 'Header',
   static: {},
   data() {
     // create data.
-    return {};
+    return {
+      user: {}
+    };
   },
   components: {},
-
   beforeCreate() {},
   created() {},
   async mounted() {},
   methods: {},
-  computed: {},
-  watch: {} */
+  computed: {
+    ...mapGetters(['isLoggedIn', 'authStatus', 'userInfo'])
+  },
+  watch: {}
 };
 </script>
 

@@ -46,7 +46,6 @@ module.exports = app => {
           });
         } else {
           // check if password matches
-          console.log(user, 'user');
           user.comparePassword(req.body.password, function(err, isMatch) {
             if (isMatch && !err) {
               console.log('22');
