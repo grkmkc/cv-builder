@@ -15,7 +15,7 @@
 
       <div v-if="isLoggedIn" class="nav-links">
         <router-link to="/user">{{ userInfo.name }}</router-link>
-        <router-link to="/signup">Sign Out</router-link>
+        <a href="#!" @click="singout()">Sign Out</a>
       </div>
       <div v-else class="nav-links">
         <router-link to="/signin">Sign In</router-link>
@@ -40,7 +40,14 @@ export default {
   beforeCreate() {},
   created() {},
   async mounted() {},
-  methods: {},
+  methods: {
+    singout: function() {
+      window.sessionStorage.clear();
+      this.$store.dispatch('signout').then(() => {
+        this.$router.push('/signin');
+      });
+    }
+  },
   computed: {
     ...mapGetters(['isLoggedIn', 'authStatus', 'userInfo'])
   },

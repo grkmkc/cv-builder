@@ -21,14 +21,15 @@ const mutations = {
     state.status = 'success';
     state.token = data.token;
     state.user = data.user;
-  }
+  },
   /* auth_error(state) {
     state.status = 'error'
-  },
-  logout(state) {
-    state.status = ''
-    state.token = ''
   }, */
+  signout(state) {
+    state.status = '';
+    state.token = '';
+    state.user = {};
+  }
 };
 
 const actions = {
@@ -52,7 +53,7 @@ const actions = {
           localStorage.removeItem('token');
           reject(err);
         }); */
-  }
+  },
   /* register({ commit }, user) {
     return new Promise((resolve, reject) => {
       commit('auth_request');
@@ -77,14 +78,15 @@ const actions = {
         });
     });
   },
-  logout({ commit }) {
+  */
+  signout({ commit }) {
     return new Promise((resolve, reject) => {
-      commit('logout');
+      commit('signout');
       localStorage.removeItem('token');
       delete axios.defaults.headers.common['Authorization'];
       resolve();
     });
-  } */
+  }
 };
 
 export default {
