@@ -26,14 +26,26 @@
       <!-- Modal content -->
       <div class="modal-content">
         <span class="close" @click="closeModal()">&times;</span>
-        <p>please fill in this field then click the button 'add'</p>
+        <p>please fill in this field then click the button "save"</p>
         <div class="row" style="margin-top:1.5em; margin-bottom:2em">
           <div class="column">
             <ckeditor
+              id="editor"
               :editor="editor"
               v-model="editorData"
               :config="editorConfig"
             ></ckeditor>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <button
+              type="button"
+              @click="submitEditor()"
+              class="button button-success"
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>
@@ -56,7 +68,7 @@ export default {
     return {
       categories: [],
       editor: ClassicEditor,
-      editorData: '<p>Content of the editor.</p>',
+      editorData: '<p>type!</p>',
       editorConfig: {
         // The configuration of the editor.
       }
@@ -82,6 +94,11 @@ export default {
     closeModal: function() {
       const modal = document.getElementById('add-section-modal');
       modal.style.display = 'none';
+    },
+    submitEditor: function() {
+      /* const editor = document.querySelector('#editor');
+      const editorData = editor.getData(); */
+      console.log(this.editorData, 'data');
     }
   },
   computed: {},

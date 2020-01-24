@@ -19,6 +19,7 @@ export default {
 <style>
 @import './style/reset.css';
 @import './style/components/alert.css';
+@import './style/components/button.css';
 #app {
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,5 +27,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   height: 100%;
+}
+.ck-editor__editable_inline {
+  min-height: 200px;
+  line-height: 1.5em;
 }
 </style>
