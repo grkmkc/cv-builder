@@ -6,8 +6,15 @@
           <h1 style="padding-bottom: 0.2em">Profile</h1>
         </div>
       </div>
-      <div class="row">
-        as
+      <div class="row profile">
+        <div class="column column-20 md-column-20 sm-column-30 user-avatar">
+          <div class="user-image">
+            <span class="user-image-initials">GK</span>
+          </div>
+        </div>
+        <div class="column column-80 md-column-80 sm-column-70 user-info">
+          There is a place for some about section
+        </div>
       </div>
     </div>
   </div>
@@ -44,15 +51,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  /* box-shadow: 0px 2px 0px 0px #b5b3b3; */
-  position: relative;
-  margin-top: 0.5em;
-  flex: 1 0 auto;
-  -webkit-flex: 1 0 auto;
-}
+@import '../style/mainpage.css';
 </style>

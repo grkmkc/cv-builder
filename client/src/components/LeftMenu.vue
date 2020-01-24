@@ -2,9 +2,6 @@
   <div class="left-menu">
     <div class="wrapper">
       <h3 class="left-menu-sections">Sections</h3>
-      <a href title="You can select and drag items to area">
-        <i class="fa fa-question-circle" id="section-icons"></i>
-      </a>
     </div>
 
     <ul class="left-menu-list">
@@ -13,12 +10,25 @@
         v-for="(category, index) in categories"
         :key="index"
       >
-        <a href style="color: #fff">{{ category.name.toUpperCase() }}</a>
-        <a href title="Add" class="add-circle-tag">
+        <p href style="color: #fff">{{ category.name.toUpperCase() }}</p>
+        <a
+          href="#"
+          title="Add"
+          class="add-circle-tag"
+          @click="handleSectionAdd(category.name)"
+        >
           <i class="fa fa-plus-circle" id="section-icons"></i>
         </a>
       </li>
     </ul>
+
+    <div id="add-section-modal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Some text in the Modal..</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,7 +54,22 @@ export default {
     let categories = await categoryApiService.getAllCategories();
     this.categories = categories;
   },
-  methods: {},
+  methods: {
+    handleSectionAdd: function(category) {
+      const modal = document.getElementById('add-section-modal');
+      // Get the button that opens the modal
+      const btn = document.getElementById('myBtn');
+      // Get the <span> element that closes the modal
+      const span = document.getElementsByClassName('close')[0];
+      // When the user clicks the button, open the modal
+
+      modal.style.display = 'block';
+
+      // When the user clicks on <span> (x), close the modal
+
+      /*     modal.style.display = 'none'; */
+    }
+  },
   computed: {},
   watch: {}
 };
@@ -52,6 +77,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import '../style/components/modal.css';
 .left-menu {
   padding-right: 1em;
   padding-left: 1em;
