@@ -1,23 +1,23 @@
 <template>
   <div class="main">
-    <h1>Main</h1>
-    <ul>
-      <li
-        v-for="(user, index) in users"
-        v-bind:index="index"
-        :key="user.id"
-      >{{ index + 1 }} - {{ user.name }}</li>
-    </ul>
+    <div class="wrapper">
+      <div class="row">
+        <div class="column">
+          <h1 style="padding-bottom: 0.2em">Profile</h1>
+        </div>
+      </div>
+      <div class="row">
+        as
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 /* import userApiService from "../services/userApiService"; */
 export default {
-  name: "Main",
-  props: {
-    msg: String
-  },
+  name: 'Main',
+  props: {},
   static: {},
   data() {
     // create data.
@@ -45,4 +45,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* box-shadow: 0px 2px 0px 0px #b5b3b3; */
+  position: relative;
+  margin-top: 0.5em;
+  flex: 1 0 auto;
+  -webkit-flex: 1 0 auto;
+}
 </style>

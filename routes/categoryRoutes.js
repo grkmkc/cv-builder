@@ -9,6 +9,7 @@ module.exports = app => {
 
   app.post(`/api/category`, async (req, res) => {
     let category = await Category.create(req.body);
+    console.log(req.body);
     return res.status(201).send({
       error: false,
       category

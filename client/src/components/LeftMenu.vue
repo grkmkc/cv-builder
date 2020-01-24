@@ -8,9 +8,13 @@
     </div>
 
     <ul class="left-menu-list">
-      <li class="left-menu-list-items" v-for="(category,index) in categories" :key="index">
-        <a href style="color: #fff">{{ category.name.toUpperCase()}}</a>
-        <a href title="Add">
+      <li
+        class="left-menu-list-items"
+        v-for="(category, index) in categories"
+        :key="index"
+      >
+        <a href style="color: #fff">{{ category.name.toUpperCase() }}</a>
+        <a href title="Add" class="add-circle-tag">
           <i class="fa fa-plus-circle" id="section-icons"></i>
         </a>
       </li>
@@ -19,9 +23,9 @@
 </template>
 
 <script>
-import categoryApiService from "../services/categoryApiService";
+import categoryApiService from '../services/categoryApiService';
 export default {
-  name: "Main",
+  name: 'Main',
   props: {
     msg: String
   },
@@ -48,9 +52,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* .left-menu-list {
-  
-} */
+.left-menu {
+  padding-right: 1em;
+  padding-left: 1em;
+}
 .left-menu-list-items {
   height: 2em;
   width: 100%;
@@ -58,6 +63,9 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
+  background: #586677;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
 }
 .left-menu-sections {
   margin-top: 1em;
@@ -80,5 +88,9 @@ ul {
   position: absolute;
   right: 8px;
   color: #fff;
+}
+.add-circle-tag {
+  display: flex;
+  align-items: center;
 }
 </style>
