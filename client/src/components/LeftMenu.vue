@@ -25,8 +25,17 @@
     <div id="add-section-modal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
+        <span class="close" @click="closeModal()">&times;</span>
+        <p>please fill in this field then click the button 'add'</p>
+        <div class="row" style="margin-top:1.5em; margin-bottom:2em">
+          <div class="column">
+            <ckeditor
+              :editor="editor"
+              v-model="editorData"
+              :config="editorConfig"
+            ></ckeditor>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -34,6 +43,8 @@
 
 <script>
 import categoryApiService from '../services/categoryApiService';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 export default {
   name: 'Main',
   props: {
@@ -43,10 +54,17 @@ export default {
   data() {
     // create data.
     return {
-      categories: []
+      categories: [],
+      editor: ClassicEditor,
+      editorData: '<p>Content of the editor.</p>',
+      editorConfig: {
+        // The configuration of the editor.
+      }
     };
   },
-  components: {},
+  components: {
+    ckeditor: CKEditor.component
+  },
 
   beforeCreate() {},
   created() {},
@@ -57,17 +75,13 @@ export default {
   methods: {
     handleSectionAdd: function(category) {
       const modal = document.getElementById('add-section-modal');
-      // Get the button that opens the modal
       const btn = document.getElementById('myBtn');
-      // Get the <span> element that closes the modal
       const span = document.getElementsByClassName('close')[0];
-      // When the user clicks the button, open the modal
-
       modal.style.display = 'block';
-
-      // When the user clicks on <span> (x), close the modal
-
-      /*     modal.style.display = 'none'; */
+    },
+    closeModal: function() {
+      const modal = document.getElementById('add-section-modal');
+      modal.style.display = 'none';
     }
   },
   computed: {},
