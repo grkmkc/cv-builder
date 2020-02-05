@@ -35,7 +35,6 @@ app.use(bodyParser.json());
 /* require('./routes/userRoutes')(app); */
 require('./routes/categoryRoutes')(app);
 require('./routes/auth')(app);
-require('./routes/userSections')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

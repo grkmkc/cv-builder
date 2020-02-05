@@ -3,7 +3,6 @@ const { Schema } = mongoose;
 var bcrypt = require('bcrypt');
 
 const UsersSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   email: {
     type: String,
     required: true,
@@ -23,7 +22,13 @@ const UsersSchema = new Schema({
   },
   birthday: {
     type: Date
-  }
+  },
+  fields: [
+    {
+      name: String,
+      content: String
+    }
+  ]
 });
 
 UsersSchema.pre('save', function(next) {
@@ -43,9 +48,4 @@ UsersSchema.methods.comparePassword = function(passw, cb) {
     cb(null, isMatch);
   });
 };
-const UsersSectionSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, ref: 'user' },
-  fields: []
-});
 mongoose.model('user', UsersSchema);
-mongoose.model('sections', UsersSectionSchema);

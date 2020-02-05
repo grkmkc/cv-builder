@@ -11,8 +11,7 @@ module.exports = app => {
       name: req.body.data.name,
       lastname: req.body.data.lastname,
       email: req.body.data.email,
-      password: req.body.data.password,
-      _id: new mongoose.Types.ObjectId()
+      password: req.body.data.password
     });
     User.findOne({ email: req.body.data.email }, function(err, user) {
       if (err) {
@@ -66,5 +65,28 @@ module.exports = app => {
         }
       }
     );
+  });
+
+  app.post('/api/user/fields', async (req, res, next) => {
+    const filter = { name: req.body.name };
+    const update = { fields: req.body.fields };
+
+    const updateUser = async newUser => {
+      try {
+        await User.updateOne(
+          { name: filter },
+          {
+            $set: {
+              fields: update
+            }
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    return res.status(201).send({
+      error: false
+    });
   });
 };
