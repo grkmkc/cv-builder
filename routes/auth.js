@@ -11,19 +11,20 @@ module.exports = app => {
       name: req.body.data.name,
       lastname: req.body.data.lastname,
       email: req.body.data.email,
-      password: req.body.data.password
+      password: req.body.data.password,
+      _id: new mongoose.Types.ObjectId()
     });
     User.findOne({ email: req.body.data.email }, function(err, user) {
       if (err) {
         console.log(err);
       }
-      var message;
+      let message;
       if (user) {
         message = 'email exists, please try to sign in';
       }
       res.json({ message: message });
     });
-    let result = await user.save();
+    const result = await user.save();
     return res.status(201).send({
       error: false,
       result

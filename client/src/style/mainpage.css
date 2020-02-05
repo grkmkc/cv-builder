@@ -9,8 +9,8 @@
   -webkit-flex: 1 0 auto;
 }
 .user-image {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   text-align: center;
   background: #586677;
   border-radius: 50%;
@@ -30,9 +30,9 @@
 }
 .user-image-initials {
   position: relative;
-  top: 37.5px; /* 25% of parent */
-  font-size: 75px; /* 50% of parent */
-  line-height: 75px; /* 50% of parent */
+  top: 30px; /* 25% of parent */
+  font-size: 60px; /* 50% of parent */
+  line-height: 60px; /* 50% of parent */
   color: #fff;
   font-weight: bold;
 }

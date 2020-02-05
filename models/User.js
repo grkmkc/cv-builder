@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 var bcrypt = require('bcrypt');
 
 const UsersSchema = new Schema({
+  _id: Schema.Types.ObjectId,
   email: {
     type: String,
     required: true,
@@ -26,10 +27,10 @@ const UsersSchema = new Schema({
 });
 
 UsersSchema.pre('save', function(next) {
+  console.log('0');
   if (!this.isModified('password')) {
     return next();
   }
-  console.log(this.password, 'asd');
   this.password = bcrypt.hashSync(this.password, 10);
   next();
 });
@@ -42,5 +43,9 @@ UsersSchema.methods.comparePassword = function(passw, cb) {
     cb(null, isMatch);
   });
 };
-
+const UsersSectionSchema = new Schema({
+  _id: { type: Schema.Types.ObjectId, ref: 'user' },
+  fields: []
+});
 mongoose.model('user', UsersSchema);
+mongoose.model('sections', UsersSectionSchema);
