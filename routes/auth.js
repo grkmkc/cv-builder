@@ -68,23 +68,40 @@ module.exports = app => {
   });
 
   app.post('/api/user/fields', async (req, res, next) => {
-    const filter = { name: req.body.name };
-    const update = { fields: req.body.fields };
-
-    const updateUser = async newUser => {
-      try {
-        await User.updateOne(
-          { name: filter },
-          {
-            $set: {
-              fields: update
-            }
-          }
-        );
-      } catch (err) {
-        console.log(err);
+    const _id = req.body._id;
+    const content = req.body.fields[0].content;
+    const name = req.body.fields[0].name;
+    const updateUser = await User.updateOne(
+      {
+        _id: _id,
+        'fields.name': name
+      },
+      {
+        $set: {
+          'fields.$.content': content
+        }
       }
-    };
+    )
+      .then(function(response) {
+        if (response.n === 0) {
+          User.updateOne(
+            {
+              _id: _id
+            },
+            {
+              $push: {
+                fields: {
+                  name: name,
+                  content: content
+                }
+              }
+            }
+          );
+        }
+      })
+      .catch(function(error) {
+        console.log(error, 'error');
+      });
     return res.status(201).send({
       error: false
     });

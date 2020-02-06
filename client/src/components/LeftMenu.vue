@@ -41,7 +41,7 @@
           <div class="column">
             <button
               type="button"
-              @click="submitEditor()"
+              @click="submitEditor($event)"
               class="button button-success"
             >
               Save
@@ -57,8 +57,10 @@
 import categoryApiService from '../services/categoryApiService';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import { mapGetters } from 'vuex';
+import axios from 'axios';
 export default {
-  name: 'Main',
+  name: 'LeftMenu',
   props: {
     msg: String
   },
@@ -66,6 +68,7 @@ export default {
   data() {
     // create data.
     return {
+      userId: '',
       categories: [],
       editor: ClassicEditor,
       editorData: '<p>type!</p>',
@@ -81,6 +84,7 @@ export default {
   beforeCreate() {},
   created() {},
   async mounted() {
+    this.userId = this.$store.state.auth.user._id;
     let categories = await categoryApiService.getAllCategories();
     this.categories = categories;
   },
@@ -89,19 +93,41 @@ export default {
       const modal = document.getElementById('add-section-modal');
       const btn = document.getElementById('myBtn');
       const span = document.getElementsByClassName('close')[0];
+      modal.setAttribute('data-name', category);
       modal.style.display = 'block';
     },
     closeModal: function() {
       const modal = document.getElementById('add-section-modal');
       modal.style.display = 'none';
     },
-    submitEditor: function() {
-      /* const editor = document.querySelector('#editor');
-      const editorData = editor.getData(); */
-      console.log(this.editorData, 'data');
+    submitEditor: async function(event) {
+      const modalName = document
+        .getElementById('add-section-modal')
+        .getAttribute('data-name');
+      console.log(this.editorData, modalName, 'data');
+      let editorRequest = await axios
+        .post('/api/user/fields', {
+          _id: this.userId,
+          fields: [
+            {
+              name: modalName,
+              content: this.editorData
+            }
+          ]
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      getuserinfo: 'userInfo'
+    })
+  },
   watch: {}
 };
 </script>
