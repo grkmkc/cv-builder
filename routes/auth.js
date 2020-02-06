@@ -82,21 +82,29 @@ module.exports = app => {
         }
       }
     )
-      .then(function(response) {
+      .then(async function(response) {
         if (response.n === 0) {
-          User.updateOne(
+          const updateField = await User.updateOne(
             {
               _id: _id
             },
             {
               $push: {
-                fields: {
-                  name: name,
-                  content: content
-                }
+                fields: [
+                  {
+                    name: name,
+                    content: content
+                  }
+                ]
               }
             }
-          );
+          )
+            .then(function(response) {
+              console.log(response);
+            })
+            .catch(function(error) {
+              console.log(error, 'errr');
+            });
         }
       })
       .catch(function(error) {
@@ -104,6 +112,21 @@ module.exports = app => {
       });
     return res.status(201).send({
       error: false
+    });
+  });
+  app.post('/api/user', async (req, res, next) => {
+    const _id = req.body._id;
+    const getUserProfile = await User.findOne({ _id: _id }, function(
+      err,
+      user
+    ) {
+      if (err) {
+        console.log(err);
+      }
+      return res.status(201).send({
+        error: false,
+        user
+      });
     });
   });
 };

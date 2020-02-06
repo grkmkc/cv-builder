@@ -104,7 +104,7 @@ export default {
       const modalName = document
         .getElementById('add-section-modal')
         .getAttribute('data-name');
-      console.log(this.editorData, modalName, 'data');
+
       let editorRequest = await axios
         .post('/api/user/fields', {
           _id: this.userId,
@@ -115,9 +115,7 @@ export default {
             }
           ]
         })
-        .then(function(response) {
-          console.log(response);
-        })
+        .then(function(response) {})
         .catch(function(error) {
           console.log(error);
         });

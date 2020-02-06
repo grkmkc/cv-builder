@@ -21,7 +21,8 @@
 </template>
 
 <script>
-/* import userApiService from "../services/userApiService"; */
+import userApiService from '../services/userApiService';
+import axios from 'axios';
 export default {
   name: 'Main',
   props: {},
@@ -29,17 +30,20 @@ export default {
   data() {
     // create data.
     return {
-      users: []
+      user: '',
+      userFields: []
     };
   },
   components: {},
 
   beforeCreate() {},
   created() {},
-  /* async mounted() {
-    let user = await userApiService.getAll();
-    this.users = user;
-  }, */
+  async mounted() {
+    let id = this.$store.state.auth.user._id;
+    let userFields = await userApiService.getUserFields(id);
+    this.user = userFields;
+    this.userFields = userFields.user.fields;
+  },
   methods: {},
   computed: {
     // stream() {
