@@ -13,7 +13,14 @@
           </div>
         </div>
         <div class="column column-80 md-column-80 sm-column-70 user-info">
-          There is a place for some about section
+          <div
+            class="user-info-fields"
+            v-for="(fields, key) in userFields"
+            :key="key"
+          >
+            <h3>{{ fields.name }}</h3>
+            <p v-html="fields.content"></p>
+          </div>
         </div>
       </div>
     </div>
@@ -58,4 +65,12 @@ export default {
 
 <style scoped>
 @import '../style/mainpage.css';
+.user-info-fields {
+  padding: 0.75em;
+  line-height: 1.25em;
+  width: -webkit-fill-available;
+  border: 1px dotted;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
 </style>
